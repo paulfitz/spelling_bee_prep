@@ -8,6 +8,7 @@ var missed = [];
 var wantMissed = false;
 
 function populateStorage() {
+  activeIndex = null;
   order = [];
   at = 0;
   missed = [];
@@ -144,13 +145,14 @@ function moveOn() {
       alert("You did all the words!!!");
       return;
     }
-    idx = at;
+    idx = order[at];
   }
   activeIndex = idx;
-  fillCard(dictionary[idx]);
+  fillCard(dictionary[activeIndex]);
 }
 
 function doMissed(cb) {
+  activeIndex = null;
   wantMissed = cb.checked;
   moveOn();
 }
