@@ -57,6 +57,12 @@ input.correct {
     background: #afa;
 }
 
+#card {
+    background: white;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
 #everything.correct {
     background: #cfc;
     background: url('cheer.gif');
