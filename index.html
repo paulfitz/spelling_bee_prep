@@ -23,7 +23,9 @@
           <button onclick="playAudio(); return false;" type="button">Hear</button>
           <input type="text" id="guess" name="guess" autocomplete="off" spellcheck="false" placeholder="Spelling?" />
           <button onclick="checkGuess(); return false;" type="button">Check</button>
-          <button onclick="moveOn(); return false;" type="button">Next</button>
+          <button onclick="moveOn(); return false;" type="button">Skip</button>
+          <input type="checkbox" onchange="doMissed(this); return false;" id="missed"><label for="missed">Missed</label>
+          <button onclick="reshuffle(); return false;" type="button">Re-shuffle</button>
         </form>
       </p>
       <p id="answer"></p>
