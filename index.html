@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="diff_match_patch.js"></script>
+    <script src="dictionary.js"></script>
+    <script src="quiz.js"></script>
+  </head>
+  <body id="everything"><main>
+    <div id="intro">
+      <button onclick="moveOn(); return false;" type="button">Start!</button>
+    </div>
+    <div id="card">
+      <audio id="audio_sample">
+        <source id="audio_src" type="audio/mpeg">
+      </audio>
+      <p id="pos"></p>
+      <p id="desc"></p>
+      <p>
+        <form onsubmit="checkGuess(); return false;">
+          <button onclick="playAudio(); return false;" type="button">Hear</button>
+          <input type="text" id="guess" name="guess" autocomplete="off" spellcheck="false" placeholder="Spelling?" />
+          <button onclick="checkGuess(); return false;" type="button">Check</button>
+          <button onclick="moveOn(); return false;" type="button">Next</button>
+        </form>
+      </p>
+      <p id="answer"></p>
+      <p id="diff"></p>
+    </div>
+  </main></body>
+</html>
