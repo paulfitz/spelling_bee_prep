@@ -24,8 +24,14 @@
           <input type="text" id="guess" name="guess" autocomplete="off" spellcheck="false" placeholder="Spelling?" />
           <button onclick="checkGuess(); return false;" type="button">Check</button>
           <button onclick="moveOn(); return false;" type="button">Skip</button>
+          <span id="excess">
           <input type="checkbox" onchange="doMissed(this); return false;" id="missed"><label for="missed">Missed</label>
           <button onclick="reshuffle(); return false;" type="button">Re-shuffle</button>
+          </span>
+          <span id="regular">
+            <span id="score"></span>
+          </span>
+          <button id="show_more" onclick="showMore(); return false;" type="button">&vellip;</button>
         </form>
       </p>
       <p id="answer"></p>

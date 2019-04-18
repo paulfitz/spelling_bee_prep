@@ -5,6 +5,7 @@ var readyToMoveOn = false;
 var order = [];
 var at = 0;
 var missed = [];
+var scores = [];
 var wantMissed = false;
 
 function populateStorage() {
@@ -56,12 +57,53 @@ function playAudio() {
   $$('guess').focus();
 }
 
+function fraction(x,y) {
+  return '<div class="frac">' +
+    '<span>' + x + '</span>' +
+    '<span class="symbol">/</span>' +
+    '<span class="bottom">' + y + '</span>' +
+    '</div>';
+}
+
+function percent(f) {
+  var txt = Math.round(f * 100);
+  return txt + "%";
+}
+
+function averageScore(len) {
+  var total = 0;
+  var ct = Math.min(len, scores.length);
+  for (var i=0; i<ct; i++) {
+    total += scores[i] ? 1 : 0;
+  }
+  return fraction(total, ct) + " (" + percent(total/ct) + ")";
+}
+
+function updateScore(hit) {
+  scores.unshift(hit);
+  var recentAverage = averageScore(20);
+  var longerTermAverage = averageScore(100);
+  var ave = recentAverage;
+  if (longerTermAverage !== recentAverage) {
+    ave = recentAverage + " " + longerTermAverage;
+  }
+  $$('score').innerHTML = ave;
+}
+
 function addToMissed() {
   if (activeIndex !== null) {
     if (missed.length === 0 || missed[missed.length - 1] !== activeIndex) {
       missed.push(activeIndex);
       saveToStorage();
     }
+    updateScore(false);
+  }
+  activeIndex = null;
+}
+
+function addToHit() {
+  if (activeIndex !== null) {
+    updateScore(true);
   }
   activeIndex = null;
 }
@@ -85,7 +127,7 @@ function checkGuess() {
     $$('answer').innerHTML = "woohoo!";
     $$('diff').innerHTML = "you got it!";
     readyToMoveOn = true;
-    activeIndex = null;
+    addToHit();
   } else {
     console.log("NOPE...");
     $$('answer').innerHTML = activeStanza.word;
@@ -121,7 +163,21 @@ function fillCard(stanza) {
   $$('audio_sample').play().catch(function(e) {
     console.log("Play:", e);
   });
+  showMore(true);
+  $$('excess').style.display = 'none';
+  $$('regular').style.display = 'inline';
   saveToStorage();
+}
+
+function showMore(score) {
+  score = score || ($$('excess').style.display !== 'none');
+  if (score) {
+    $$('excess').style.display = 'none';
+    $$('regular').style.display = 'inline';
+  } else {
+    $$('excess').style.display = 'inline';
+    $$('regular').style.display = 'none';
+  }
 }
 
 function start() {
@@ -129,7 +185,6 @@ function start() {
 
 function moveOn() {
   addToMissed();
-  console.log(order);
   $$('card').style.display = 'block';
   $$('intro').style.display = 'none';
   var idx = null;
