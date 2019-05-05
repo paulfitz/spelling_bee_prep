@@ -81,12 +81,8 @@ function averageScore(len) {
 
 function updateScore(hit) {
   scores.unshift(hit);
-  var recentAverage = averageScore(20);
-  var longerTermAverage = averageScore(100);
-  var ave = recentAverage;
-  if (longerTermAverage !== recentAverage) {
-    ave = recentAverage + " " + longerTermAverage;
-  }
+  var longerTermAverage = averageScore(10000);
+  var ave = longerTermAverage;
   $$('score').innerHTML = ave;
 }
 
